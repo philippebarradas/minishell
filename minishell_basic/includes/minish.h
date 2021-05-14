@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/10 11:07:34 by phbarrad          #+#    #+#             */
-/*   Updated: 2021/05/11 08:47:24 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/13 12:37:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ typedef struct			s_set
 	int					d;
 }						t_set;
 
+void					aff_last_buf(t_set *set, char *buf);
+void					start_term2(t_set *set);
 void					init_his(t_set *set);
 void					add_history(t_set *set);
 
@@ -183,7 +185,6 @@ int						forwar_quote(char *src, int i);
 void					ft_putstr_not_found(char *str, t_set *set);
 void					ft_eexit(t_set *set);
 int						ft_disp_export(t_set *set);
-int						start_shell(int ac, char **av, t_set *set);
 void					treat_cmd(t_set *set);
 void					start_cmd(t_set *set);
 void					search_arg(char *str, t_set *set);
@@ -243,7 +244,7 @@ void					get_lastcmd(t_set *set);
 char					*get_path(t_set *set, char *path, char *cmd);
 char					*get_path_chemin(t_set *set, char *path, int len,
 char *cmd);
-char					*cmd_in_pwd(t_set *set, char *cmd);
+char					*cmd_in_pwd(t_set *set, char *cmd, char *path);
 int						ft_strlenbc(char *str);
 int						check_sh(t_set *set, char *path);
 int						check_stat_file(t_set *set, char *path);
@@ -257,7 +258,6 @@ int						init_all(t_set *set, char **envp);
 int						free_all(t_set *set, int ret);
 void					disp_prompt(void);
 
-void					print_args(char **str);
 char					*get_val(t_set *set);
 
 #endif

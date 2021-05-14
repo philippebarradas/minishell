@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 15:32:30 by phbarrad          #+#    #+#             */
-/*   Updated: 2021/05/10 12:45:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/13 10:33:49 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int				aff_modif_str(t_set *set, char *buf)
 	if (set->cur_pos - 12 < (int)(ft_strlen(set->str)))
 	{
 		ft_putstr_fd(buf, STDERR);
-		ft_putstr_fd(set->str + (set->cur_pos - 12), STDERR);
+		if (ft_strlen(buf) < 2)
+			ft_putstr_fd(set->str + (set->cur_pos - 12), STDERR);
 		if ((len % col) == 0)
 		{
 			ft_putstr_fd(" ", STDERR);
@@ -83,14 +84,13 @@ void			all_ccmd(char *buf, t_set *set)
 		set_fle(set, buf);
 	else if (ft_strlen(buf) == 1 && buf[0] == 4)
 		cmd_free(set, buf);
-	else if (((set->str[set->cur_pos - 12] != ' ')) &&
-	((buf[0] == 22 && buf[1] == 0) || (buf[0] == 6 && buf[1] == 0) ||
-	(buf[0] == 18 && buf[1] == 0)))
+	else if ((buf[0] == 22 && buf[1] == 0) || (buf[0] == 6 && buf[1] == 0) ||
+	(buf[0] == 18 && buf[1] == 0))
 		is_copy_cut(set, buf);
 	else if (buf[0] != 10 && buf[0] != 127)
 		oui = aff_modif_str(set, buf);
-	if (oui == 0)
-		ft_putstr_fd(buf, STDERR);
+	if (oui == 0 && ft_strlen(buf) < 4)
+		disp_bbuf(set, buf);
 }
 
 void			eeddn(t_set *set)
@@ -100,4 +100,7 @@ void			eeddn(t_set *set)
 	else
 		set->str[1] = '\0';
 	add_history(set);
+	ffree(set->credir);
+	set->credir = ft_strdup("");
+	set->fl = 0;
 }

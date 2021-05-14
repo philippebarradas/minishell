@@ -6,11 +6,23 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 13:13:42 by phbarrad          #+#    #+#             */
-/*   Updated: 2021/05/11 12:58:15 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/13 13:43:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minish_bonus.h"
+
+void			add_exval(t_set *set)
+{
+	char		*tmp;
+
+	tmp = ft_itoa(set->exit_val);
+	if (set->exit_v)
+		free(set->exit_v);
+	set->exit_v = ft_strjoin("?=", tmp);
+	free(tmp);
+	ft_hideenv(set->exit_v, set);
+}
 
 void			disp_prompt(void)
 {
@@ -21,24 +33,19 @@ void			disp_prompt(void)
 int				main(int ac, char **av, char **envp)
 {
 	t_set		*set;
-	int			ret;
-	int			pid;
+
+	(void)ac;
+	(void)av;
 	if (!(isatty(0)))
 		return (0);
 	if (!(set = malloc(sizeof(t_set))))
 		return (-1);
 	if (init_all(set, envp) == -1)
 		return (-1);
-	ret = 0;
-	if (ac == 3)
-		ret = start_shell(ac, av, set);
-	else
+	while (1)
 	{
-		while (1)
-		{
-			read_ent(set);
-			treat_cmd(set);
-		}
+		read_ent(set);
+		treat_cmd(set);
 	}
-	return (ret);
+	return (0);
 }

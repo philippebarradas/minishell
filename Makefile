@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tsannie <tsannie@student.42.fr>            +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/11 13:03:05 by tsannie           #+#    #+#              #
-#    Updated: 2021/05/11 13:03:07 by tsannie          ###   ########.fr        #
+#    Updated: 2021/05/13 13:47:09 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,21 +16,13 @@
 
 NAME			= minishell
 CC				= @gcc
-CFLAGS			= -Wall -Wextra -Werror #-fsanitize=leak
+CFLAGS			= -Wall -Wextra -Werror -fsanitize=leak
 LIB_FLAGS		= -lncurses -lft -Llibft
 RM				= @rm -rf
 LIBFT			= ./libft
 INCLUDE			= -I /minishell_basic/includes
 INCLUDE_B		= -I /minishell_bonus/includes
 INCLUDE_LIB		= -I ./libft/libft.a
-
-#/bin/../../../bin/ls
-#/bin//////////bin/ls
-#/bin/Ls
-#export A export A="qwe " export A
-#ᴍɪɴɪsʜᴇʟʟ ➔  .
-#ᴍɪɴɪsʜᴇʟʟ ➔  ..
-#ᴍɪɴɪsʜᴇʟʟ ➔  exit
 
 ######################################################################
 #                               C0l0r$                               #
@@ -82,8 +74,10 @@ SRC				= $(addprefix minishell_basic/srcs/bin/, $(BIN)) \
 #                         Source Files_bonus                         #
 ######################################################################
 
-BONUS			= wildcard_bonus.c ft_redirect_bonus.c edit_line_bonus.c edit_copy_bonus.c \
-				dell_bonus.c term_lib_bonus.c
+BONUS			= edit_line_bonus.c edit_line2_bonus.c edit_copy_bonus.c \
+				dell_bonus.c term_lib_bonus.c ft_redirect_bonus1.c \
+				ft_redirect_bonus2.c wildcard_bonus1.c wildcard_bonus2.c \
+				wildcard_bonus3.c
 
 SRC_B			= $(addprefix minishell_bonus/srcs/bin/, $(BIN)) \
 				$(addprefix minishell_bonus/srcs/termcap/, $(TERMCAP)) \
@@ -143,4 +137,7 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all test clean fclean re
+norm:
+			norminette libft/*.c libft/*.h ${SRC} ${SRC_B} */*/*.h
+
+.PHONY:		all test clean fclean re norm

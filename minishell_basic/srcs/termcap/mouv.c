@@ -6,11 +6,20 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/06 15:32:30 by phbarrad          #+#    #+#             */
-/*   Updated: 2021/05/11 08:20:01 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/13 10:38:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minish.h"
+
+void		aff_last_buf(t_set *set, char *buf)
+{
+	if ((((int)ft_strlen(set->str) + 12) % (set->col)) == 0)
+	{
+		ft_putstr_fd(buf, STDERR);
+		aff_dell(set);
+	}
+}
 
 void		aff_dellnl(size_t len, size_t col, t_set *set)
 {
@@ -31,25 +40,33 @@ void		aff_dellnl(size_t len, size_t col, t_set *set)
 	}
 }
 
+void		aff_all_h(t_set *set)
+{
+	disp_prompt();
+	ft_putstr_fd(set->str, STDERR);
+	if ((((int)ft_strlen(set->str) + 12) % (set->col)) == 0)
+	{
+		ft_putstr_fd(" ", STDERR);
+		aff_dell(set);
+	}
+}
+
 int			history_prev(t_set *set)
 {
 	size_t len;
 	size_t col;
 
 	col = set->col;
-	//set->dell_his = 0;
 	len = ft_strlen(set->str) + 12;
 	if (set->his_pos > 0 && set->history[set->his_pos - 1])
 		set->his_pos--;
 	else
 		return (0);
-	//set->dell_his = getdellen(ft_strlen(set->str), col);
 	ffree(set->str);
 	set->str = ft_strdup(set->history[set->his_pos]);
 	aff_dellnl(len, col, set);
 	ft_putstr_fd("\033[2K", STDERR);
-	disp_prompt();
-	ft_putstr_fd(set->str, STDERR);
+	aff_all_h(set);
 	return (0);
 }
 
@@ -62,7 +79,6 @@ int			history_next(t_set *set)
 	len = ft_strlen(set->str) + 12;
 	if (set->his_pos + 1 == set->inc_his)
 	{
-		//set->dell_his = getdellen(ft_strlen(set->str), col);
 		ffree(set->str);
 		set->str = ft_strdup("");
 		aff_dellnl(len, col, set);
@@ -76,10 +92,8 @@ int			history_next(t_set *set)
 		return (0);
 	ffree(set->str);
 	set->str = ft_strdup(set->history[set->his_pos]);
-	//set->dell_his = getdellen(ft_strlen(set->str), set->col);
 	aff_dellnl(len, col, set);
 	ft_putstr_fd("\033[2K", STDERR);
-	disp_prompt();
-	ft_putstr_fd(set->str, STDERR);
+	aff_all_h(set);
 	return (0);
 }

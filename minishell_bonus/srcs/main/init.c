@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 15:59:01 by phbarrad          #+#    #+#             */
-/*   Updated: 2021/05/11 14:51:00 by user42           ###   ########.fr       */
+/*   Updated: 2021/05/13 12:41:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ void			init_struct(t_set *set, char **envp)
 	init_null(set);
 	set->exit_val = 0;
 	set->bleu = 0;
+	set->fl = 0;
 	set->pid = 0;
 	set->ex_er = 0;
 	set->fdin = -1;
 	set->dell_len = 0;
-	//set->dell_his = 0;
 	set->fdout = -1;
 	set->save_stdin = -1;
 	set->save_stdout = -1;
@@ -85,6 +85,7 @@ void			init_struct(t_set *set, char **envp)
 	set->envp = ft_strdup_tabl(envp);
 	set->path = ft_get_path(envp);
 	set->exit = 0;
+	set->credir = ft_strdup("");
 	set->old_pwd = ft_strdup("OLDPWD=");
 	set->pwd = ft_strjoin("PWD=", getcwd(buff, 4097));
 	init_structafter(set);

@@ -21,24 +21,19 @@ void			disp_prompt(void)
 int				main(int ac, char **av, char **envp)
 {
 	t_set		*set;
-	int			ret;
 
+	(void)ac;
+	(void)av;
 	if (!(isatty(0)))
 		return (0);
 	if (!(set = malloc(sizeof(t_set))))
 		return (-1);
 	if (init_all(set, envp) == -1)
 		return (-1);
-	ret = 0;
-	if (ac == 3)
-		ret = start_shell(ac, av, set);
-	else
+	while (1)
 	{
-		while (1)
-		{
-			read_ent(set);
-			treat_cmd(set);
-		}
+		read_ent(set);
+		treat_cmd(set);
 	}
-	return (ret);
+	return (0);
 }
